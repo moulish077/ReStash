@@ -1,0 +1,79 @@
+
+/* Remove unwanted outer spacing */
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  background: #f7f5fc;
+  box-sizing: border-box;
+}
+
+/* Sidebar flush against the left edge */
+.dashboard-sidebar {
+  flex: 0 0 250px;
+  width: 250px;
+  min-height: 100vh;
+  margin: 0;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-right: 1px solid #e8e2f0;
+}
+
+/* Page content occupies the remaining space */
+.dashboard-main {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 0;
+  margin: 0;
+  padding: 32px;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+
+/* Keep dashboard sections in normal document flow */
+.dashboard-main > * {
+  position: relative;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.dashboard-main h1,
+.dashboard-main h2,
+.dashboard-main p {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 768px) {
+  .dashboard-layout {
+    flex-direction: column;
+  }
+
+  .dashboard-sidebar {
+    flex: 0 0 auto;
+    width: 100%;
+    min-height: auto;
+    border-right: none;
+    border-bottom: 1px solid #e8e2f0;
+  }
+
+  .dashboard-main {
+    flex: 1 1 auto;
+    width: 100%;
+    padding: 20px 16px;
+  }
+}

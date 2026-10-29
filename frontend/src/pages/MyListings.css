@@ -1,0 +1,392 @@
+
+.listings-page {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px;
+  color: #29213f;
+  box-sizing: border-box;
+}
+
+.listings-page * {
+  box-sizing: border-box;
+}
+
+.listings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 26px;
+}
+
+.listings-eyebrow {
+  color: #7953c8;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin: 0 0 8px;
+}
+
+.listings-header h1 {
+  font-size: clamp(26px, 3vw, 34px);
+  margin: 0;
+}
+
+.listings-subtitle {
+  color: #817990;
+  margin: 10px 0 0;
+  line-height: 1.6;
+}
+
+.listings-primary-button,
+.listings-secondary-button {
+  border-radius: 10px;
+  padding: 11px 17px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.listings-primary-button {
+  color: white;
+  background: #7650c8;
+  border: 1px solid #7650c8;
+}
+
+.listings-primary-button:hover {
+  background: #603bb0;
+}
+
+.listings-secondary-button {
+  color: #6944b5;
+  background: white;
+  border: 1px solid #e0d7f1;
+}
+
+.listings-secondary-button:hover {
+  background: #f5f0ff;
+}
+
+.listings-primary-button:disabled,
+.listings-secondary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.listings-owner,
+.listings-form {
+  padding: 22px;
+  border: 1px solid #e9e1f5;
+  border-radius: 16px;
+  background: white;
+  margin-bottom: 22px;
+}
+
+.listings-owner label,
+.listings-form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 15px 0 8px;
+}
+
+.listings-owner label {
+  margin-top: 0;
+}
+
+.listings-owner input,
+.listings-form input,
+.listings-form textarea,
+.listings-form select {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #e2dced;
+  border-radius: 9px;
+  color: #29213f;
+  background: #fff;
+  font: inherit;
+  font-size: 14px;
+}
+
+.listings-owner input:focus,
+.listings-form input:focus,
+.listings-form textarea:focus,
+.listings-form select:focus,
+.listings-search input:focus {
+  outline: 2px solid #cbb7f4;
+  border-color: #8b65d1;
+}
+
+.listings-owner p {
+  color: #817990;
+  font-size: 12px;
+  margin: 8px 0 0;
+}
+
+.listings-form-heading h2,
+.listings-toolbar h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.listings-form-heading p,
+.listings-toolbar p {
+  color: #817990;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 7px 0 0;
+}
+
+.listings-form-heading {
+  margin-bottom: 18px;
+}
+
+.listings-form label:first-of-type {
+  margin-top: 0;
+}
+
+.listings-form textarea {
+  resize: vertical;
+}
+
+.listings-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.listings-alert {
+  border-radius: 10px;
+  padding: 13px 15px;
+  margin-bottom: 18px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.listings-alert.error {
+  color: #9c2f40;
+  background: #fff0f1;
+  border: 1px solid #ffd6da;
+}
+
+.listings-alert.success {
+  color: #246d4b;
+  background: #edfaf2;
+  border: 1px solid #c8efd8;
+}
+
+.listings-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 25px 0 32px;
+}
+
+.listings-stat-card {
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid #e9e1f5;
+  background: linear-gradient(135deg, #fff, #faf7ff);
+}
+
+.listings-stat-card span {
+  display: block;
+  color: #817990;
+  font-size: 13px;
+}
+
+.listings-stat-card strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 28px;
+  color: #6843b4;
+}
+
+.listings-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.listings-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border: 1px solid #e9e1f5;
+  border-radius: 11px;
+  background: white;
+  margin-bottom: 22px;
+}
+
+.listings-search span {
+  font-size: 23px;
+  color: #8b72bd;
+}
+
+.listings-search input {
+  width: 100%;
+  min-width: 0;
+  padding: 14px 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #29213f;
+  font: inherit;
+  font-size: 14px;
+}
+
+.listings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.listing-card {
+  min-width: 0;
+  padding: 20px;
+  background: white;
+  border: 1px solid #e9e1f5;
+  border-radius: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.listing-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 25px rgb(70 45 110 / 8%);
+}
+
+.listing-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.listing-category,
+.listing-status {
+  display: inline-block;
+  padding: 6px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.listing-category {
+  color: #704bb8;
+  background: #f1eaff;
+}
+
+.listing-status.available {
+  color: #24764c;
+  background: #e9f8ef;
+}
+
+.listing-status.unavailable {
+  color: #98621b;
+  background: #fff3dc;
+}
+
+.listing-card h3 {
+  margin: 18px 0 8px;
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+
+.listing-description {
+  color: #817990;
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.listing-location {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #5f536f;
+  font-size: 13px;
+  margin-top: 17px;
+}
+
+.listing-card-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-top: 1px solid #f0ebf6;
+  margin-top: 18px;
+  padding-top: 14px;
+  color: #897f99;
+  font-size: 11px;
+}
+
+.listings-empty {
+  text-align: center;
+  padding: 38px 20px;
+  border: 1px dashed #d9cceb;
+  border-radius: 15px;
+  background: #fcfaff;
+}
+
+.listings-empty h3 {
+  margin: 0 0 10px;
+}
+
+.listings-empty p {
+  color: #817990;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.listings-empty .listings-primary-button {
+  margin-top: 12px;
+}
+
+@media (max-width: 700px) {
+  .listings-page {
+    padding: 20px 15px;
+  }
+
+  .listings-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .listings-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .listings-stat-card {
+    padding: 15px;
+  }
+
+  .listings-stat-card strong {
+    font-size: 24px;
+  }
+
+  .listings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .listings-toolbar {
+    align-items: flex-start;
+  }
+
+  .listings-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .listings-form-actions button {
+    width: 100%;
+  }
+}

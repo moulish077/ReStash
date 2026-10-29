@@ -1,4 +1,14 @@
-import { useState } from 'react'
+import { Routes, Route, useNavigate } from 'react-router-dom'
+import Dashboard from './pages/Dashboard'
+import DashboardLayout from './components/DashboardLayout'
+import BrowseResources from './pages/BrowseResources'
+import MyListings from './pages/MyListings'
+import MyBookings from './pages/MyBookings'
+import Messages from './pages/Messages'
+import Profile from './pages/Profile'
+import Settings from './pages/Settings'
+import { useState, useEffect } from 'react'
+import { checkBackend, authenticateUser } from './api'
 import {
   Recycle,
   Search,
@@ -20,48 +30,18 @@ import {
 } from 'lucide-react'
 import './App.css'
 
-const resources = [
-  {
-    id: 1,
-    name: 'MacBook Pro 14"',
-    category: 'Electronics',
-    location: 'Salem, Tamil Nadu',
-    price: 500,
-    description: 'A powerful laptop for development and creative projects.',
-    icon: Laptop,
-    color: 'blue',
-  },
-  {
-    id: 2,
-    name: 'Canon DSLR Camera',
-    category: 'Photography',
-    location: 'Chennai, Tamil Nadu',
-    price: 350,
-    description: 'Capture beautiful moments with professional-quality photos.',
-    icon: Camera,
-    color: 'peach',
-  },
-  {
-    id: 3,
-    name: 'Camping Tent',
-    category: 'Outdoor',
-    location: 'Coimbatore, Tamil Nadu',
-    price: 200,
-    description: 'Everything you need for a comfortable outdoor adventure.',
-    icon: Tent,
-    color: 'green',
-  },
-  {
-    id: 4,
-    name: 'Power Tool Kit',
-    category: 'Tools',
-    location: 'Salem, Tamil Nadu',
-    price: 150,
-    description: 'A practical toolkit for repairs and weekend DIY projects.',
-    icon: Wrench,
-    color: 'yellow',
-  },
-]
+type Resource = {
+  id: number
+  name: string
+  category: string
+  location: string
+  price: number
+  description: string
+  icon: typeof Laptop
+  color: string
+}
+
+const resources: Resource[] = []
 
 const categories = [
   { name: 'All', icon: Recycle },
@@ -74,7 +54,24 @@ const categories = [
 
 type ModalType = 'login' | 'signup' | 'listing' | null
 
-function App() {
+function HomePage() {
+  const navigate = useNavigate()
+  const [backendStatus, setBackendStatus] = useState(
+    'Checking backend...'
+  )
+
+  useEffect(() => {
+    checkBackend()
+      .then((data) => {
+        console.log('Backend response:', data)
+        setBackendStatus('Backend connected successfully!')
+      })
+      .catch((error) => {
+        console.error('Backend connection error:', error)
+        setBackendStatus('Backend connection failed')
+      })
+  }, [])
+
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('All')
   const [modal, setModal] = useState<ModalType>(null)
@@ -109,19 +106,38 @@ function App() {
     setSubmitting(false)
   }
 
-  function handleAuth(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setSubmitting(true)
+  
+async function handleAuth(
+  event: React.FormEvent<HTMLFormElement>
+) {
+  event.preventDefault();
+  setSubmitting(true);
 
-    // The frontend form works, but authentication requires a backend.
-    window.setTimeout(() => {
-      setSubmitting(false)
-      closeModal()
-      showNotice(
-        'Your form is working! Connect the backend to enable account access.',
-      )
-    }, 600)
+  try {
+    const result = await authenticateUser(
+      modal === "login" ? "login" : "signup",
+      email,
+      password
+    );
+
+    closeModal();
+
+    if (modal === 'login') {
+      navigate('/dashboard');
+    } else {
+      showNotice(result.message);
+    }
+  } catch (error) {
+    showNotice(
+      error instanceof Error
+        ? error.message
+        : "Something went wrong."
+    );
+  } finally {
+    setSubmitting(false);
   }
+}
+
 
   function handleListing(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -271,23 +287,23 @@ function App() {
         </section>
 
         <section className="stats">
-          <div className="stat-item">
-            <strong>04+</strong>
-            <span>Sample resources</span>
-          </div>
-          <div className="stat-item">
-            <strong>05</strong>
-            <span>Categories</span>
-          </div>
-          <div className="stat-item">
-            <strong>01</strong>
-            <span>Shared community</span>
-          </div>
-          <div className="stat-item">
-            <strong>∞</strong>
-            <span>Ways to reuse</span>
-          </div>
-        </section>
+  <div className="stat-item">
+    <strong>{resources.length}</strong>
+    <span>Resources available</span>
+  </div>
+  <div className="stat-item">
+    <strong>{categories.length - 1}</strong>
+    <span>Resource categories</span>
+  </div>
+  <div className="stat-item">
+    <strong>1</strong>
+    <span>Community platform</span>
+  </div>
+  <div className="stat-item">
+    <strong>∞</strong>
+    <span>Ways to reuse</span>
+  </div>
+</section>
 
         <section className="explore-section" id="explore">
           <div className="section-heading">
@@ -445,9 +461,9 @@ function App() {
           ) : (
             <div className="empty-state">
               <Search size={35} />
-              <h3>No resources found</h3>
+              <h3>No resources available yet</h3>
               <p>
-                Try a different search or choose another category.
+                There are no community listings yet. Be the first to add a resource.
               </p>
 
               <button
@@ -462,10 +478,10 @@ function App() {
             </div>
           )}
 
-          <p className="demo-message">
-            <CheckCircle size={15} />
-            Sample listings for the ReStash frontend demo.
-          </p>
+                <p className="demo-message">
+          <CheckCircle size={15} />
+          Real community listings will appear here when available.
+        </p>
         </section>
 
         <section className="cta-section">
@@ -675,6 +691,21 @@ function App() {
           </div>
         </div>
       )}
+            <div
+        style={{
+          position: 'fixed',
+          bottom: 16,
+          left: 16,
+          zIndex: 9999,
+          background: '#e8f5e9',
+          color: '#1b5e20',
+          padding: '10px 16px',
+          borderRadius: 8,
+          fontSize: 14,
+        }}
+      >
+        {backendStatus}
+      </div>
 
       {notice && (
         <div className="toast" role="status">
@@ -692,4 +723,25 @@ function App() {
   )
 }
 
-export default App
+
+// Keep your existing homepage component and its code.
+// Rename the existing homepage component to HomePage if needed.
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route index element={<Dashboard />} />
+        <Route path="browse" element={<BrowseResources />} />
+        <Route path="listings" element={<MyListings />} />
+        <Route path="bookings" element={<MyBookings />} />
+        <Route path="messages" element={<Messages />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="settings" element={<Settings />} />
+      </Route>
+    </Routes>
+  )
+}
+
